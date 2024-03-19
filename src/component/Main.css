@@ -41,7 +41,7 @@ body {
 
 .main-content {
   max-width: 50rem;
-  width: 100%;
+  width: 550px;
   min-height: 400px;
   height: auto;
   padding: 18px 18px 120px 18px;
@@ -68,6 +68,13 @@ body {
 
 .button-container {
   display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button1{
+  display: flex;
+  justify-content: end;
 }
 
 .button {
@@ -78,12 +85,12 @@ body {
   border: none;
   font-size: 18px;
   letter-spacing: 1px;
-  margin: auto;
   display: flex;
   position: relative;
   margin-top: 10px;
   cursor: pointer;
   margin-left: 6px;
+  
 }
 
 .button:focus,
@@ -96,6 +103,10 @@ body {
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
+}
+
+.radio2{
+  margin-left: 12px;
 }
 
 @media screen and (max-width: 768px) {
@@ -123,8 +134,7 @@ body {
     padding: 12px 28px;
     font-size: 16px;
     margin-top: -70px;
-    /* margin-left: 20px; */
-    /* gap: 5px; */
+ 
   }
 
   .counter-container {
