@@ -47,11 +47,23 @@ const useSpeechRecognization = () => {
     setIsListening(false);
     recognition.stop();
   };
+
+  const speakText = (textToSpeak: string) => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.error("Speech synthesis not supported.");
+    }
+  };
+
   return {
     text,
+    setText,
     isListening,
     startListening,
     stopListening,
+    speakText,
     hasRecognitionSupport: !!recognition,
   };
 };

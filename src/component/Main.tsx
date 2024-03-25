@@ -4,20 +4,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMicrophone,
   faMicrophoneSlash,
+  faVolumeUp,
+  faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Main.css";
 
 const Main = () => {
   const {
     text,
+    setText,
     isListening,
     startListening,
     stopListening,
+    speakText,
     hasRecognitionSupport,
   } = useSpeechRecognization();
 
+  const [isMuted, setIsMuted] = useState(false);
   const [isMicOn, setIsMicOn] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [editableText, setEditableText] = useState("");
 
   const toggleMic = () => {
     if (isListening) {
@@ -31,7 +37,17 @@ const Main = () => {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedLanguage(e.target.value);
   };
-  
+
+  const handleMuteToggle = () => {
+    setIsMuted((prevState) => !prevState);
+    if (isMuted) {
+      // Unmute
+      speakText(text);
+    } else {
+      // Mute
+      window.speechSynthesis.cancel();
+    }
+  };
 
   return (
     <div className="container">
@@ -78,17 +94,37 @@ const Main = () => {
       </div>
       {hasRecognitionSupport ? (
         <>
-          <div className="main-content">
+          {/* <div className="main-content">
             {isListening && !text && (
               <div>Your Browser is Listening currently ....</div>
             )}
             {text}
-          </div>
+          </div> */}
+
+          <textarea
+            className="main-content"
+            value={text}
+            onChange={(e) => {
+              if (!isMuted) {
+                speakText(e.target.value);
+              }
+            }}
+            placeholder={
+              isListening && !text
+                ? "Your Browser is Listening currently ...."
+                : ""
+            }
+            readOnly={isListening}
+          />
+
           <div className="button-container">
             <button className="button" onClick={toggleMic}>
               <FontAwesomeIcon
                 icon={isMicOn ? faMicrophone : faMicrophoneSlash}
               />
+            </button>
+            <button className="button" onClick={handleMuteToggle}>
+              <FontAwesomeIcon icon={isMuted ? faVolumeMute : faVolumeUp} />
             </button>
           </div>
         </>
