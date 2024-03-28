@@ -37,12 +37,19 @@ const Main = () => {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedLanguage(e.target.value);
   };
+  // const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const language = e.target.value;
+  //   setSelectedLanguage(language);
+  //   if (!isMuted && text) {
+  //     speakText(text, language);
+  //   }
+  // };
 
   const handleMuteToggle = () => {
     setIsMuted((prevState) => !prevState);
     if (isMuted) {
       // Unmute
-      speakText(text);
+      speakText(text, selectedLanguage);
     } else {
       // Mute
       window.speechSynthesis.cancel();
@@ -94,19 +101,12 @@ const Main = () => {
       </div>
       {hasRecognitionSupport ? (
         <>
-          {/* <div className="main-content">
-            {isListening && !text && (
-              <div>Your Browser is Listening currently ....</div>
-            )}
-            {text}
-          </div> */}
-
           <textarea
             className="main-content"
             value={text}
             onChange={(e) => {
               if (!isMuted) {
-                speakText(e.target.value);
+                speakText(e.target.value, selectedLanguage);
               }
             }}
             placeholder={

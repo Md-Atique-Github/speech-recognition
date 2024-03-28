@@ -37,20 +37,36 @@ const useSpeechRecognization = () => {
     };
   }, [recognition, isListening]);
 
+  // const startListening = (language: string) => {
+  //   setText("");
+  //   setIsListening(true);
+  //   recognition.lang = language;
+  //   recognition.start();
+  // };
   const startListening = (language: string) => {
     setText("");
     setIsListening(true);
-    recognition.lang = language;
+    recognition.lang = language === "ur-PK" ? "ur-PK" : language; // Set Urdu code for Urdu selection
     recognition.start();
   };
+
   const stopListening = () => {
     setIsListening(false);
     recognition.stop();
   };
 
-  const speakText = (textToSpeak: string) => {
+  // const speakText = (textToSpeak: string) => {
+  //   if ("speechSynthesis" in window) {
+  //     const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  //     window.speechSynthesis.speak(utterance);
+  //   } else {
+  //     console.error("Speech synthesis not supported.");
+  //   }
+  // };
+  const speakText = (textToSpeak: string, language: string) => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = language; // Set language to Urdu
       window.speechSynthesis.speak(utterance);
     } else {
       console.error("Speech synthesis not supported.");
